@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ckb" dir="rtl">
-<head>
+<head><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#062417">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Darya Muhamad — دەفتەری داهات</title>
@@ -1087,5 +1089,11 @@ window.addEventListener('beforeunload',e=>{if(dirty){doSave();e.preventDefault()
   renderHeader();renderAll();renderCats();
 })();
 </script>
-</body>
+</body><script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js");
+  });
+}
+</script>
 </html>
