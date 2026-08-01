@@ -199,6 +199,43 @@ nav button.on{color:var(--gold)}
 #toast.show{opacity:1;transform:translate(50%,0)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.plate .wm i{opacity:1;transform:none}}
 @media(min-width:620px){.stats{grid-template-columns:repeat(4,1fr)}}
+</style>@media(min-width:620px){
+  .stats{grid-template-columns:repeat(4,1fr)}
+}
+
+/* Dark / Light Mode */
+.theme-toggle{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--txt);<div id="saveState">…بارکردن</div>
+  font-size:17px;
+}
+
+body.light{
+  --ink:#F3F6F2;
+  --deep:#E8EFEA;
+  --panel:#FFFFFF;
+  --panel-2:#EEF3EF;
+  --line:#C5D4C8;
+  --line-soft:#DCE5DE;
+  --txt:#142019;
+  --mut:#66796D;
+  --gold:#B58624;
+  --mint:#168A62;
+  --red:#C65347;
+}
+
+body.light header{
+  background:rgba(255,255,255,.96);
+}
+
+body.light nav{
+  background:rgba(255,255,255,.96);
+}
+
 </style>
 </head>
 <body>
@@ -1083,7 +1120,61 @@ $('#ncInc').onclick=()=>addCat('inc');
 $('#ncExp').onclick=()=>addCat('exp');
 window.addEventListener('beforeunload',e=>{if(dirty){doSave();e.preventDefault();}});
 
-(async()=>{
+(async()=>{(async()=>{
+  await load();
+  $('#eDate').value=dk(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  );
+
+  renderHeader();
+  renderAll();
+  renderCats();
+})();
+
+
+// ---------- Dark / Light Mode ----------
+
+const themeBtn = document.getElementById('themeBtn');
+
+function applyTheme(theme){
+  const isLight = theme === 'light';
+
+  document.body.classList.toggle('light', isLight);
+
+  if(themeBtn){
+    themeBtn.textContent = isLight ? '🌙' : '☀️';
+  }
+}
+
+applyTheme(localStorage.getItem('theme') || 'dark');
+
+if(themeBtn){
+  themeBtn.addEventListener('click', function(){
+
+    const nextTheme =
+      document.body.classList.contains('light')
+        ? 'dark'
+        : 'light';
+
+    localStorage.setItem('theme', nextTheme);
+    applyTheme(nextTheme);
+  });
+}
+
+</script>
+
+<script>
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('service-worker.js');
+  });
+}
+</script>
+
+</body>
+</html>
   await load();
   $('#eDate').value=dk(now.getFullYear(),now.getMonth(),now.getDate());
   renderHeader();renderAll();renderCats();
