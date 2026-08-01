@@ -1087,7 +1087,32 @@ window.addEventListener('beforeunload',e=>{if(dirty){doSave();e.preventDefault()
   await load();
   $('#eDate').value=dk(now.getFullYear(),now.getMonth(),now.getDate());
   renderHeader();renderAll();renderCats();
+})();(async()=>{
+  await load();
+  $('#eDate').value=dk(now.getFullYear(),now.getMonth(),now.getDate());
+  renderHeader();renderAll();renderCats();
 })();
+
+
+// Dark / Light Mode
+const themeBtn = document.getElementById('themeBtn');
+
+if(localStorage.getItem('theme') === 'light'){
+  document.body.classList.add('light');
+}
+
+if(themeBtn){
+  themeBtn.onclick = function(){
+    document.body.classList.toggle('light');
+
+    localStorage.setItem(
+      'theme',
+      document.body.classList.contains('light') ? 'light' : 'dark'
+    );
+  };
+}
+
+</script>
 </script>
 </body><script>
 if ("serviceWorker" in navigator) {
